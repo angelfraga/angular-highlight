@@ -99,7 +99,15 @@ export class HighlightComponent {
   styleUrls: [ './app.component.css' ]
 })
 export class AppComponent  {
-  value = 'Hello world';
-  term = 'll';
+  value = `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus in ornare lacus. Morbi tincidunt nunc facilisis elit porta scelerisque. Duis aliquet pretium lacus eu tristique. Nullam id congue purus. Ut facilisis malesuada nunc, sit amet venenatis lacus dignissim non. Fusce vel condimentum lacus. Donec tempus, quam eget porta lobortis, felis lacus hendrerit velit, ut imperdiet libero ante ac dolor. Nullam at ante vitae est feugiat pulvinar et nec ipsum.
+
+Etiam dignissim, justo id tincidunt volutpat, sem tortor tincidunt mauris, et pellentesque quam quam et dui. Integer risus nunc, porta vel ex vel, iaculis ornare ligula. Etiam in nisl egestas, facilisis nunc eu, tempor lorem. Nunc viverra varius erat. Integer commodo malesuada lorem, ac posuere eros tincidunt ac. Nulla magna ipsum, viverra a imperdiet vel, faucibus ac risus. Integer mi ipsum, suscipit eu cursus eget, egestas semper dolor. Nulla posuere dignissim turpis non dapibus. Nam tempor auctor volutpat. Cras quis consequat urna. Nunc non lacus in velit pretium eleifend non sit amet nulla. Nam at congue massa. Integer nec varius est, non vestibulum mi. Ut eget laoreet lacus. Ut lectus diam, tempor vel ex a, cursus mattis metus.
+
+Proin lorem purus, condimentum euismod dictum ut, ultrices non nisi. Nulla tincidunt risus non lacinia semper. Praesent mollis lacinia tempor. Sed vitae rutrum nibh. Ut sed mattis arcu. Aliquam ornare porttitor sem vitae sagittis. Proin auctor mattis semper. Duis faucibus justo eget mi scelerisque mattis. Sed nisl augue, interdum at augue ac, finibus ultrices mauris.
+
+Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nunc vel hendrerit sapien. Cras posuere vulputate sem, eget posuere erat placerat sed. Maecenas in porta tellus. Suspendisse id ante vitae ex laoreet semper vel non nibh. Integer placerat diam ac nisl feugiat, quis laoreet lectus porta. Fusce sed pharetra quam, sit amet vehicula tellus. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Quisque ultricies nec velit nec dictum. Donec convallis rhoncus sapien non vehicula. Fusce facilisis blandit mi ut laoreet. Vivamus eu erat non risus auctor lobortis non aliquam lorem. Pellentesque vitae commodo tellus. Sed suscipit hendrerit velit, vitae vehicula risus maximus et. Praesent porttitor diam quis nibh fringilla placerat. Nunc tincidunt ac turpis et ullamcorper.
+
+Nam bibendum ligula ipsum, a dapibus risus egestas in. Pellentesque et enim vitae eros porta viverra. Maecenas vitae nisi varius, maximus ex vel, tempor leo. Mauris feugiat, neque ac elementum rutrum, libero orci iaculis nisl, at commodo lectus justo a massa. Nullam consequat enim in nibh cursus porttitor. Curabitur ut est pretium, aliquam ante at, consectetur dolor. Proin dignissim leo id turpis interdum, at tempus orci interdum. Aenean erat orci, maximus non tellus ac, varius iaculis leo. Mauris non ante ac dolor viverra congue id eu nibh.`;
+  term = 'dolor';
   decoration = 'custom';
 }

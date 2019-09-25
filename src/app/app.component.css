@@ -1,3 +1,9 @@
+textarea {
+  width: 100%;
+  min-height: 200px;
+  resize: vertical;
+}
+
 ::ng-deep .custom {
   letter-spacing: 2px;
   background: black;
