@@ -1,3 +1,10 @@
-p {
-  font-family: Lato;
+::ng-deep .custom {
+  letter-spacing: 2px;
+  background: black;
+  color:white;
+  display: inline-block;
+  padding: 12px;
+}
+::ng-deep .custom  .highlightText {
+  background: red;
 }

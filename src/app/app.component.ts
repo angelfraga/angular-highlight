@@ -86,6 +86,7 @@ export class HighlightComponent {
       <option value="line-through">line-through</option>
       <option value="overline">overline</option>
       <option value="none">none</option>
+      <option value="custom">custom</option>
     </select>
     <br>
     <label> Term : </label> <br>
@@ -100,5 +101,5 @@ export class HighlightComponent {
 export class AppComponent  {
   value = 'Hello world';
   term = 'll';
-  decoration = 'underline';
+  decoration = 'custom';
 }
