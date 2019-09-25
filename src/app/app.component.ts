@@ -3,35 +3,26 @@ import { BehaviorSubject, Subject } from 'rxjs';
 import { combineLatest } from 'rxjs';
 import { takeUntil, map } from 'rxjs/operators';
 import { Pipe, PipeTransform } from '@angular/core';
+import { escape, escapeRegExp } from 'lodash/fp';
 
 @Pipe({ name: 'Highlight' })
 export class HighlightPipe implements PipeTransform {
 
   public static readonly cssClass = 'highlightText';
 
-  /**
-   * https://stackoverflow.com/questions/3446170/escape-string-for-use-in-javascript-regex
-   * @param text string to be escaped
-   */
-  public static escapeRegExp(text: string) {
-    return text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-  }
-
   public static applyHighlight(value: string, query: string, cssClass: string = this.cssClass) {
     if (!query || !value) {
-      return value;
+      return escape(value);
     }
     const span = document.createElement('span');
-    span.classList.add(cssClass);
-    const div = document.createElement('div');
-    div.textContent = value;
-    const sanitizedValue = div.innerHTML;
-    div.textContent = query;
-    const sanitizedQuery = this.escapeRegExp(div.innerHTML);
-    const result = sanitizedValue.replace(new RegExp(sanitizedQuery, 'gi'), (match, i, e) => {
-      span.textContent = match;
+    span.classList.add(cssClass); 
+    const sanitizedQuery = escapeRegExp(escape(query));
+    const result = escape(value).replace(new RegExp(sanitizedQuery, 'gi'), (match, i, e) => {
+      console.log(match)
+      span.innerHTML = match;
       return span.outerHTML;
     });
+    console.log(result)
     return result;
   }
   /**
@@ -109,10 +100,16 @@ export class HighlightComponent implements OnDestroy {
 @Component({
   selector: 'my-app',
   template: `
-    <highlight value="ok" decoration="overline" term="k"></highlight>
+    <label> Term : </label> <br>
+    <input type="text" [(ngModel)]="term" /><br>
+    <label> Value : </label> <br>
+    <textarea [(ngModel)]="value" ></textarea>
+    <hr>
+    <highlight [value]="value" decoration="overline" [term]="term"></highlight>
   `,
   styleUrls: [ './app.component.css' ]
 })
 export class AppComponent  {
-  name = 'Angular';
+  value;
+  term;
 }
