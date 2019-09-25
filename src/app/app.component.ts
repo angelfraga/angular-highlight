@@ -5,35 +5,45 @@ import { takeUntil, map } from 'rxjs/operators';
 import { Pipe, PipeTransform } from '@angular/core';
 import { escape, escapeRegExp } from 'lodash/fp';
 
-@Pipe({ name: 'Highlight' })
+export interface HighlightConfig {
+  query: string;
+  cssClass?: string;
+}
+
+@Pipe({ name: 'highlight' })
 export class HighlightPipe implements PipeTransform {
 
   public static readonly cssClass = 'highlightText';
 
-  public static applyHighlight(value: string, query: string, cssClass: string = this.cssClass) {
-    if (!query || !value) {
+  public static applyHighlight(value: string, config: HighlightConfig ) {
+    if(!config) {
+      throw new Error('HighlightConfig is missing');
+    }
+  
+    const {query, cssClass = this.cssClass } = config;
+
+    if (!config.query || !value) {
       return escape(value);
     }
+  
     const span = document.createElement('span');
-    span.classList.add(cssClass); 
+    span.classList.add(cssClass);
     const sanitizedQuery = escapeRegExp(escape(query));
-    const result = escape(value).replace(new RegExp(sanitizedQuery, 'gi'), (match, i, e) => {
-      console.log(match)
+    const result = escape(value).replace(new RegExp(sanitizedQuery, 'g'), (match, i, e) => {
       span.innerHTML = match;
       return span.outerHTML;
     });
-    console.log(result)
+  
     return result;
   }
   /**
-   * Note: use with outerHTML or innerHTML directives
+   * Note: use with innerHTML directives
    * e.g
-   * <div [outerHTML]="'hello world' | gsecHighlight: 'll'"></div>
-   * <div [innerHTML]="'hello world' | gsecHighlight: 'll'"></div>
+   * <div [innerHTML]="'hello world' | highlight: {query: 'll'} "></div>
    */
   constructor() { }
-  transform(value: string, query: string): string {
-    return HighlightPipe.applyHighlight(value, query);
+  transform(value: string, config: HighlightConfig): string {
+    return HighlightPipe.applyHighlight(value, config );
   }
 }
 
@@ -43,7 +53,7 @@ export type HighlightDecorationClass = 'underline' | 'line-through' | 'none' | '
 @Component({
   selector: 'highlight',
   template: `
-   <div [ngClass]="decoration" [innerHTML]="result$ | async" ></div>
+   <div [ngClass]="decoration" [innerHTML]="value | highlight: { query: query }" ></div>
   `,
   styles: [
     `::ng-deep .underline  .highlightText {
@@ -61,55 +71,34 @@ export type HighlightDecorationClass = 'underline' | 'line-through' | 'none' | '
     `
   ]
 })
-export class HighlightComponent implements OnDestroy {
-
-  value$ = new BehaviorSubject<string>('');
-  term$ = new BehaviorSubject<string>('');
-  componentDestroyed$ = new Subject();
-  result$ = new BehaviorSubject<string>('');
-
-  @Input() set value(value: string) {
-    this.value$.next(value);
-  }
-
-  @Input() set term(term: string) {
-    this.term$.next(term);
-  }
-
-@Input() decoration: (HighlightDecorationClass | string)[] = ['underline'];
-
-  constructor() {
-    combineLatest([
-      this.value$,
-      this.term$
-    ]).pipe(
-      takeUntil(this.componentDestroyed$),
-      map(([value, term]) => {
-        return HighlightPipe.applyHighlight(value, term);
-      })
-    ).subscribe(this.result$);
-  }
-
-  ngOnDestroy(): void {
-    this.componentDestroyed$.next(true);
-  }
-
+export class HighlightComponent {
+  @Input() value;
+  @Input() query;
+  @Input() decoration = 'underline';
 }
-
 
 @Component({
   selector: 'my-app',
   template: `
+    <label> Decoration : </label> <br>
+    <select [(ngModel)]="decoration">
+      <option value="underline">underline</option>
+      <option value="line-through">line-through</option>
+      <option value="overline">overline</option>
+      <option value="none">none</option>
+    </select>
+    <br>
     <label> Term : </label> <br>
     <input type="text" [(ngModel)]="term" /><br>
     <label> Value : </label> <br>
     <textarea [(ngModel)]="value" ></textarea>
     <hr>
-    <highlight [value]="value" decoration="overline" [term]="term"></highlight>
+    <highlight [value]="value" [decoration]="decoration" [query]="term"></highlight>
   `,
   styleUrls: [ './app.component.css' ]
 })
 export class AppComponent  {
-  value;
-  term;
+  value = 'Hello world';
+  term = 'll';
+  decoration = 'underline';
 }
