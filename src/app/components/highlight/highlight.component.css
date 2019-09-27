@@ -1,0 +1,12 @@
+highlight .underline  .highlightText {
+  text-decoration: underline
+}
+highlight .line-through .highlightText {
+  text-decoration: line-through
+}
+highlight .overline .highlightText {
+  text-decoration: overline
+}
+highlight .none .highlightText {
+  text-decoration: none
+}
